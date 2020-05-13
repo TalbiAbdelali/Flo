@@ -7,18 +7,18 @@ import java.util.UUID;
 import com.ata.flo.model.User;
 
 public interface UserDao {
-	int insertUser(UUID id,  User user);
+	int insertUser(String id,  User user);
 	
 	default int insertUser(User user) {
-		UUID id = UUID.randomUUID();
+		String id = UUID.randomUUID().toString();
 		return insertUser(id, user);
 	}
 	
 	List<User> selectAllUsers();
 	
-	Optional<User> selectUserById(UUID id);
+	Optional<User> selectUserById(String id);
 	
-	int deleteUserBYId(UUID id);
+	int deleteUserBYId(String id);
 	
-	int updateUserById(UUID id, User user);
+	int updateUserById(String id, User user);
 }

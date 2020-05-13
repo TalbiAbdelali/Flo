@@ -1,9 +1,7 @@
 package com.ata.flo.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +11,37 @@ import com.ata.flo.model.User;
 @Repository("psqlDao")
 public class UserDaoImpl implements UserDao{
 
-	private static final List<User> DB = new ArrayList<User>();
+	@Override
+	public int insertUser(String id, User user) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<User> selectAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<User> selectUserById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int deleteUserBYId(String id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateUserById(String id, User user) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/*private static final List<User> DB = new ArrayList<User>();
 	
 	@Override
 	public int insertUser(UUID id, User user) {
@@ -55,5 +83,5 @@ public class UserDaoImpl implements UserDao{
 					return 0;
 				})
 				.orElse(0);
-	}
+	}*/
 }

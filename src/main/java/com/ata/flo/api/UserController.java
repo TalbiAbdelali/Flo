@@ -41,18 +41,18 @@ public class UserController {
 	}
 	
 	@GetMapping(path = "{id}")
-	public User getUserById(@PathVariable("id") UUID id) {
+	public User getUserById(@PathVariable("id") String id) {
 		return userService.getUserById(id)
 				.orElse(null);
 	}
 	
 	@DeleteMapping(path ="{id}")
-	public void deletePersonById(@PathVariable("id") UUID id) {
+	public void deletePersonById(@PathVariable("id") String id) {
 		userService.deleteUser(id);
 	}
 	
 	@PutMapping(path = "{id}")
-	public void updatePersonById(@PathVariable("id") UUID id,/*@Valid @NotNull*/ @RequestBody User user) {
+	public void updatePersonById(@PathVariable("id") String id,/*@Valid @NotNull*/ @RequestBody User user) {
 		userService.updateUser(id, user);
 	}
 }

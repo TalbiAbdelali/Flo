@@ -29,15 +29,15 @@ public class UserService {
 		return userDao.selectAllUsers();
 	}
 	
-	public Optional<User> getUserById(UUID id){
+	public Optional<User> getUserById(String id){
 		return userDao.selectUserById(id);
 	}
 	
-	public int deleteUser(UUID id) {
+	public int deleteUser(String id) {
 		return userDao.deleteUserBYId(id);
 	}
 	
-	public int updateUser(UUID id, User user) {
+	public int updateUser(String id, User user) {
 		return userDao.updateUserById(id, user);
 	}
 	

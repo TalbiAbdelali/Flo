@@ -1,13 +1,11 @@
 package com.ata.flo.model;
 
-import java.util.UUID;
-
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
-	private final UUID id;
+	private final String id;
 	@NotBlank
 	private final String username;
 	@NotBlank
@@ -25,7 +23,7 @@ public class User {
 	private final boolean isEnabled;
 	private final boolean isAdmin;
 	
-	public User(@JsonProperty("id") UUID id,
+	public User(@JsonProperty("id") String id,
 			@JsonProperty("username") String username,
 			@JsonProperty("lastname") String lastname,
 			@JsonProperty("password") String password,
@@ -45,7 +43,7 @@ public class User {
 		this.isAdmin = true;
 	}
 	
-	public User(UUID id, String username, String lastname, String password, String email, User father, User mother,
+	public User(String id, String username, String lastname, String password, String email, User father, User mother,
 			String location, boolean isAccountExpired, boolean isAccountLocked, boolean isCredentielExpired,
 			boolean isEnabled, boolean isAdmin) {
 		this.id = id;
@@ -63,7 +61,7 @@ public class User {
 		this.isAdmin = isAdmin;
 	}
 	
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 	public String getUsername() {
