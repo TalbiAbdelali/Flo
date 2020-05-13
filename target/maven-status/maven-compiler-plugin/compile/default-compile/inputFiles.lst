@@ -1,8 +1,12 @@
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/model/Activity.java
+/home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/api/ShoppingListController.java
+/home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/dao/ShoppingListDao.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/model/FamilyEvent.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/model/User.java
+/home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/dao/impl/ShoppingListDaoImpl.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/dao/impl/UserDaoImpl.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/api/UserController.java
+/home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/dao/ProductDao.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/model/PersonnelProgram.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/dao/UserDao.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/datasource/PersonDatasource.java
@@ -11,3 +15,4 @@
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/service/UserService.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/model/Product.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/FloApplication.java
+/home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/service/ShoppingListService.java

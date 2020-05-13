@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.ata.flo.dao.UserDao;
 import com.ata.flo.model.User;
 
-@Repository("postgres")
+@Repository("UserPsqlTable")
 public class UserDataAccessImpl implements UserDao{
 
 	private final JdbcTemplate jdbcTemplate;

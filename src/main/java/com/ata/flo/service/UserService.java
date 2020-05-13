@@ -2,7 +2,6 @@ package com.ata.flo.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,7 +16,7 @@ public class UserService {
 	private UserDao userDao;
 	
 	@Autowired
-	public UserService(@Qualifier("postgres") UserDao userDao) {
+	public UserService(@Qualifier("UserPsqlTable") UserDao userDao) {
 		this.userDao = userDao;
 	}
 	

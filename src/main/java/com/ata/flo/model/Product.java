@@ -1,15 +1,19 @@
 package com.ata.flo.model;
 
-import java.util.UUID;
+import javax.validation.constraints.NotBlank;
 
 public class Product {
-	private final UUID id;
+	private final String id;
+	@NotBlank
 	private final String name;
+	@NotBlank
 	private final double quantity;
+	@NotBlank
 	private final double price;
+	
 	private final String invoice;
 	
-	public Product(UUID id, String name, double quantity, double price, String invoice) {
+	public Product(String id, String name, double quantity, double price, String invoice) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -18,7 +22,7 @@ public class Product {
 		this.invoice = invoice;
 	}
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 

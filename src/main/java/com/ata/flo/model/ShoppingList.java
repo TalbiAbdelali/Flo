@@ -1,21 +1,22 @@
 package com.ata.flo.model;
 
 import java.util.List;
-import java.util.UUID;
+
+import javax.validation.constraints.NotBlank;
 
 public class ShoppingList {
-	private final UUID id;
+	private final String id;
 	private final List<Product> list;
 	private final double totalPrice;
 	
-	public ShoppingList(UUID id, List<Product> list, double totalPrice) {
+	public ShoppingList(String id, List<Product> list, double totalPrice) {
 		super();
 		this.id = id;
 		this.list = list;
 		this.totalPrice = totalPrice;
 	}
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 

@@ -2,18 +2,17 @@ package com.ata.flo.model;
 
 import java.util.Date;
 import java.util.Timer;
-import java.util.UUID;
 
 public class Activity {
-	private final UUID id;
+	private final String id;
 	private final String activityname;
 	private final String type;
 	private final String description;
 	private final int nbRepetitions;
 	private final Timer duration;
-	private final Date date;
+	private final Date performed;
 	
-	public Activity(UUID id, String activityname, String type, String description, int nbRepetitions, Timer duration, Date date) {
+	public Activity(String id, String activityname, String type, String description, int nbRepetitions, Timer duration, Date performed) {
 		super();
 		this.id = id;
 		this.activityname = activityname;
@@ -21,10 +20,10 @@ public class Activity {
 		this.nbRepetitions = nbRepetitions;
 		this.type = type;
 		this.duration = duration;
-		this.date = date;
+		this.performed = performed;
 	}
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -40,8 +39,16 @@ public class Activity {
 		return duration;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getPerformed() {
+		return performed;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public int getNbRepetitions() {
+		return nbRepetitions;
 	}
 	
 	
