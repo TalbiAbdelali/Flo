@@ -5,11 +5,11 @@ import java.util.UUID;
 public class Product {
 	private final UUID id;
 	private final String name;
-	private final String quantity;
+	private final double quantity;
 	private final double price;
 	private final String invoice;
 	
-	public Product(UUID id, String name, String quantity, double price, String invoice) {
+	public Product(UUID id, String name, double quantity, double price, String invoice) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -26,7 +26,7 @@ public class Product {
 		return name;
 	}
 
-	public String getQuantity() {
+	public double getQuantity() {
 		return quantity;
 	}
 
