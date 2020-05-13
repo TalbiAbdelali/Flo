@@ -17,7 +17,7 @@ public class UserService {
 	private UserDao userDao;
 	
 	@Autowired
-	public UserService(@Qualifier("psqlDao") UserDao userDao) {
+	public UserService(@Qualifier("postgres") UserDao userDao) {
 		this.userDao = userDao;
 	}
 	

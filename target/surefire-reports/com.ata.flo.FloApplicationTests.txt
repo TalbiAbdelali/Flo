@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.ata.flo.FloApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.167 s - in com.ata.flo.FloApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.548 s - in com.ata.flo.FloApplicationTests

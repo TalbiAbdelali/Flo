@@ -52,7 +52,7 @@ public class UserController {
 	}
 	
 	@PutMapping(path = "{id}")
-	public void updatePersonById(@PathVariable("id") UUID id,@Valid @NotNull @RequestBody User user) {
+	public void updatePersonById(@PathVariable("id") UUID id,/*@Valid @NotNull*/ @RequestBody User user) {
 		userService.updateUser(id, user);
 	}
 }
