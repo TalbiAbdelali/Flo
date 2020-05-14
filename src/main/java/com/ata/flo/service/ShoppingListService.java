@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.ata.flo.dao.ShoppingListDao;
+import com.ata.flo.model.Product;
 import com.ata.flo.model.ShoppingList;
 
 @Service
@@ -26,6 +27,18 @@ public class ShoppingListService {
 	
 	public Optional<ShoppingList> getShoppingListById(String id) {
 		return shoppingListDao.selectListById(id);
+	}
+	
+	public int deleteProductById(String id) {
+		return shoppingListDao.deleteProductBYId(id);
+	}
+	
+	public int updateProductById(String id, Product product) {
+		return shoppingListDao.updateProductById(id, product);
+	}
+	
+	public int addProduct(String shoppingId, Product product) {
+		return  shoppingListDao.insertProduct(shoppingId, product);
 	}
 	
 }

@@ -24,21 +24,38 @@ public class ShoppingListDaoImpl implements ShoppingListDao{
 	}
 
 	@Override
-	public Optional<Product> selectProductById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<Product> selectProductById(String productid) {
+		final String sql ="SELECT productid, name, quantity, price, invoice FROM  Products where productid = ?";
+ 		Product product =  jdbcTemplate.queryForObject(sql, new Object[]{productid}, (resultSet, i) -> {
+ 			String productId = resultSet.getString("productid");
+ 			String name = resultSet.getString("name");
+ 			double quantity = resultSet.getDouble("quantity");
+ 			double price = resultSet.getDouble("price");
+ 			String invoice = resultSet.getString("invoice");
+ 			return new Product(productId, name ,quantity, price, invoice);
+ 		});
+ 		return Optional.ofNullable(product);
 	}
 
 	@Override
 	public int deleteProductBYId(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+		final String sql ="DELETE FROM products WHERE id = ?";
+		
+		Object[] params = {id};
+        int[] types = {Types.VARCHAR};
+        
+		return this.jdbcTemplate.update(sql, params, types);
 	}
 
 	@Override
 	public int updateProductById(String id, Product product) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		final String sql ="UPDATE products SET name = ?, quantity = ?, price = ?, invoice = ?  WHERE productid = ?";
+		
+		Object[] params = {product.getName(), product.getQuantity(), product.getPrice(), product.getInvoice(), id};
+        int[] types = {Types.VARCHAR, Types.DOUBLE, Types.DOUBLE, Types.VARCHAR, Types.VARCHAR};
+        
+		return this.jdbcTemplate.update(sql, params, types);
 	}
 
 	@Override
