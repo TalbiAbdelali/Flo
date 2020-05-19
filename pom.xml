@@ -30,6 +30,13 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		
+		<!-- Some useful method -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>28.1-jre</version>
+		</dependency>
+		
 		<!-- JDBC -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
