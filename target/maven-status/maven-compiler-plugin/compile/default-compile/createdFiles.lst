@@ -1,7 +1,6 @@
 com/ata/flo/service/UserService.class
 com/ata/flo/model/Product.class
 com/ata/flo/model/PersonnelProgram.class
-com/ata/flo/api/UserController.class
 com/ata/flo/model/User.class
 com/ata/flo/dao/impl/UserDaoImpl.class
 com/ata/flo/dao/UserDao.class

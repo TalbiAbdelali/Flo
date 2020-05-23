@@ -34,14 +34,16 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 			.authorizeRequests()
 			.antMatchers("/", "index", "/css/*", "/js/*").permitAll() //hna fin tzid les page li bghiti ykono accessible bla authentication
 			.antMatchers("/api/**").hasRole(USER.name())
-			.antMatchers(HttpMethod.DELETE, "/admin/api/user/**").hasAuthority(USER_WRITE.getPermission())
-			.antMatchers(HttpMethod.POST, "/admin/api/user/**").hasAuthority(USER_WRITE.getPermission())
-			.antMatchers(HttpMethod.PUT, "/admin/api/user/**").hasAuthority(USER_WRITE.getPermission())
-			.antMatchers(HttpMethod.GET, "/admin/api/user/**").hasAnyRole(ADMIN.name(), USER.name())
+			.antMatchers(HttpMethod.DELETE, "/admin/api/**").hasAuthority(USER_WRITE.getPermission())
+			.antMatchers(HttpMethod.POST, "/admin/api/**").hasAuthority(USER_WRITE.getPermission())
+			.antMatchers(HttpMethod.PUT, "/admin/api/**").hasAuthority(USER_WRITE.getPermission())
+			.antMatchers(HttpMethod.GET, "/admin/api/**").hasAnyRole(ADMIN.name())
 			.anyRequest()
 			.authenticated()
 			.and()
-			.httpBasic();
+			.formLogin()
+			.loginPage("/login").permitAll()
+			.defaultSuccessUrl("/defaultpage");
 	}
 	
 	@Override
