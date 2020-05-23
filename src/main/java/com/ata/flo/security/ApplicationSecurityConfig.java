@@ -13,6 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import static com.ata.flo.security.ApplicationUserRole.*;
+
+import java.util.concurrent.TimeUnit;
+
 import static com.ata.flo.security.ApplicationUserPermission.*;
 
 @Configuration
@@ -43,7 +46,18 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 			.and()
 			.formLogin()
 			.loginPage("/login").permitAll()
-			.defaultSuccessUrl("/defaultpage");
+			.defaultSuccessUrl("/defaultpage")
+			.and()
+			.rememberMe()/* defaults to 2 weeks*/
+				.tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21)) // equivalent to 21 days
+				.key("dirChiKeyM9awd")
+			.and()
+			.logout()
+				.logoutUrl("/logout")
+				.clearAuthentication(true)
+				.invalidateHttpSession(true)
+				.deleteCookies("JSESSIONID", "remember-me")
+				.logoutSuccessUrl("/login");
 	}
 	
 	@Override
