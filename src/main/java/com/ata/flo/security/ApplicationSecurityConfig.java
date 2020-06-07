@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 import static com.ata.flo.security.ApplicationUserRole.*;
 
 import java.util.concurrent.TimeUnit;
@@ -45,15 +47,20 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 			.authenticated()
 			.and()
 			.formLogin()
-			.loginPage("/login").permitAll()
-			.defaultSuccessUrl("/defaultpage")
+				.loginPage("/login")
+				.permitAll()
+				.defaultSuccessUrl("/defaultpage")
+				.passwordParameter("password") // to match with html form in the login.html
+				.usernameParameter("username") // ...
 			.and()
 			.rememberMe()/* defaults to 2 weeks*/
 				.tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21)) // equivalent to 21 days
 				.key("dirChiKeyM9awd")
+				.rememberMeParameter("remember-me") // to match with html form in the login.html
 			.and()
 			.logout()
 				.logoutUrl("/logout")
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
 				.clearAuthentication(true)
 				.invalidateHttpSession(true)
 				.deleteCookies("JSESSIONID", "remember-me")
