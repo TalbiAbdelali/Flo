@@ -10,8 +10,8 @@ import static com.ata.flo.security.ApplicationUserPermission.*;
 
 public enum ApplicationUserRole {
 	USER(Sets.newHashSet()),
-	ADMIN(Sets.newHashSet(USER_READ, USER_WRITE, ARTICLE_READ, ARTICLE_WRITE)),
-	HALFADMIN(Sets.newHashSet(USER_READ,ARTICLE_READ));
+	ADMIN(Sets.newHashSet()), // has permissions: USER_READ, USER_WRITE, ARTICLE_READ, ARTICLE_WRITE
+	HALFADMIN(Sets.newHashSet()); // has permissions: USER_READ,ARTICLE_READ,ARTICLE_WRITE
 	
 	private final Set<ApplicationUserPermission> permissions;
 	
