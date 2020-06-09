@@ -18,6 +18,9 @@ public interface UserDao {
 	
 	Optional<User> selectUserById(String id);
 	
+	// For DB Authentication
+	Optional<User> selectUserByUsername(String username);
+	
 	int deleteUserBYId(String id);
 	
 	int updateUserById(String id, User user);

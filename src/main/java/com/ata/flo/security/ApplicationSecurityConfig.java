@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -26,9 +28,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	private final PasswordEncoder passwordEncoder;
 	
+	private final MyUserDetailsService myUserDetailsService;
+	
 	@Autowired
-	public ApplicationSecurityConfig(PasswordEncoder passwordEncoder) {
-		super();
+	public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, MyUserDetailsService myUserDetailsService) {
+		this.myUserDetailsService = myUserDetailsService;
 		this.passwordEncoder = passwordEncoder;
 	}
 
@@ -46,14 +50,14 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 			.anyRequest()
 			.authenticated()
 			.and()
-			.formLogin()
-				.loginPage("/login")
+			.httpBasic();
+				/*.loginPage("/login")
 				.permitAll()
 				.defaultSuccessUrl("/defaultpage")
 				.passwordParameter("password") // to match with html form in the login.html
 				.usernameParameter("username") // ...
 			.and()
-			.rememberMe()/* defaults to 2 weeks*/
+			.rememberMe() // defaults to 2 weeks
 				.tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21)) // equivalent to 21 days
 				.key("dirChiKeyM9awd")
 				.rememberMeParameter("remember-me") // to match with html form in the login.html
@@ -64,36 +68,50 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 				.clearAuthentication(true)
 				.invalidateHttpSession(true)
 				.deleteCookies("JSESSIONID", "remember-me")
-				.logoutSuccessUrl("/login");
+				.logoutSuccessUrl("/login");*/
 	}
 	
+//	@Bean
+//	protected UserDetailsService userDetailsService() {
+//		UserDetails admin = User.builder()
+//				.username("admin")
+//				.password(passwordEncoder.encode("admin"))
+//				//.roles(ADMIN.name())// ROLE_ADMIN
+//				.authorities(ADMIN.getGrantedAuthorities())
+//				.build();
+//		UserDetails halfadmin = User.builder()
+//				.username("halfadmin")
+//				.password(passwordEncoder.encode("halfadminn"))
+//				//.roles(USER.name())// ROLE_USER
+//				.authorities(HALFADMIN.getGrantedAuthorities())
+//				.build();
+//		UserDetails user = User.builder()
+//				.username("user")
+//				.password(passwordEncoder.encode("user"))
+//				//.roles(USER.name())// ROLE_USER
+//				.authorities(USER.getGrantedAuthorities())
+//				.build();
+//		
+//		return new InMemoryUserDetailsManager(
+//				admin,
+//				halfadmin,
+//				user
+//				);
+//	}
+	
 	@Override
-	@Bean
-	protected UserDetailsService userDetailsService() {
-		UserDetails admin = User.builder()
-				.username("admin")
-				.password(passwordEncoder.encode("admin"))
-				//.roles(ADMIN.name())// ROLE_ADMIN
-				.authorities(ADMIN.getGrantedAuthorities())
-				.build();
-		UserDetails halfadmin = User.builder()
-				.username("halfadmin")
-				.password(passwordEncoder.encode("halfadminn"))
-				//.roles(USER.name())// ROLE_USER
-				.authorities(HALFADMIN.getGrantedAuthorities())
-				.build();
-		UserDetails user = User.builder()
-				.username("user")
-				.password(passwordEncoder.encode("user"))
-				//.roles(USER.name())// ROLE_USER
-				.authorities(USER.getGrantedAuthorities())
-				.build();
-		
-		return new InMemoryUserDetailsManager(
-				admin,
-				halfadmin,
-				user
-				);
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	auth.authenticationProvider(daoAuthenticationProvider());
 	}
+	
+	@Bean
+	public DaoAuthenticationProvider daoAuthenticationProvider() {
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setPasswordEncoder(passwordEncoder);
+		provider.setUserDetailsService(myUserDetailsService);
+		
+		return provider;
+	}
+
 	
 }

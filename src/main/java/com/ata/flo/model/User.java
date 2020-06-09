@@ -1,10 +1,13 @@
 package com.ata.flo.model;
 
+import java.util.List;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 public class User {
+	
 	private final String id;
 	@NotBlank
 	private final String username;
@@ -17,17 +20,27 @@ public class User {
 	private final User father;
 	private final User mother;
 	private final String location;
-	private final boolean isAccountExpired;
+	
+	private int active;
+	
+	private List<String> roles;
+	
+	private List<String> permissions;
+	
+	/*private final boolean isAccountExpired;
 	private final boolean isAccountLocked;
 	private final boolean isCredentielExpired;
 	private final boolean isEnabled;
-	private final boolean isAdmin;
+	private final boolean isAdmin;*/
 	
 	public User(@JsonProperty("id") String id,
 			@JsonProperty("username") String username,
 			@JsonProperty("lastname") String lastname,
 			@JsonProperty("password") String password,
-			@JsonProperty("email") String email) {
+			@JsonProperty("email") String email,
+			@JsonProperty("active") int active,
+			@JsonProperty("roles") List<String> roles,
+			@JsonProperty("permissions") List<String> permissions) {
 		this.id = id;
 		this.username = username;
 		this.lastname = lastname;
@@ -36,11 +49,9 @@ public class User {
 		this.father = null;
 		this.mother = null;
 		this.location = "";
-		this.isAccountExpired = true;
-		this.isAccountLocked = true;
-		this.isCredentielExpired = true;
-		this.isEnabled = true;
-		this.isAdmin = true;
+		this.active = active;
+		this.roles = roles;
+		this.permissions = permissions;
 	}
 	
 	public User(String id, String username, String lastname, String password, String email, User father, User mother,
@@ -54,11 +65,6 @@ public class User {
 		this.father = father;
 		this.mother = mother;
 		this.location = location;
-		this.isAccountExpired = isAccountExpired;
-		this.isAccountLocked = isAccountLocked;
-		this.isCredentielExpired = isCredentielExpired;
-		this.isEnabled = isEnabled;
-		this.isAdmin = isAdmin;
 	}
 	
 	public String getId() {
@@ -85,22 +91,29 @@ public class User {
 	public String getLocation() {
 		return location;
 	}
-	public boolean isAccountExpired() {
-		return isAccountExpired;
+
+	public int getActive() {
+		return active;
 	}
-	public boolean isAccountLocked() {
-		return isAccountLocked;
+
+	public void setActive(int active) {
+		this.active = active;
 	}
-	public boolean isCredentielExpired() {
-		return isCredentielExpired;
+
+	public List<String> getRoles() {
+		return roles;
 	}
-	public boolean isEnabled() {
-		return isEnabled;
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
 	}
-	public boolean isAdmin() {
-		return isAdmin;
+
+	public List<String> getPermissions() {
+		return permissions;
 	}
-	
-	
+
+	public void setPermissions(List<String> permissions) {
+		this.permissions = permissions;
+	}
 
 }

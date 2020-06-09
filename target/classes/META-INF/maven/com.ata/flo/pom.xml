@@ -50,18 +50,25 @@
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 		
-		<!-- postgersql DB dependecy -->
+		<!-- postgersql DB dependency -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		
-		<!-- flywaydb dependecy -->
+		<!-- flywaydb dependency -->
 		<!-- dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 		</dependency -->
+		
+		<!-- Hibernate dependency -->
+		<dependency>
+		    <groupId>org.hibernate.javax.persistence</groupId>
+		    <artifactId>hibernate-jpa-2.0-api</artifactId>
+		    <version>1.0.1.Final</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -13,7 +13,7 @@
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/dao/UserDao.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/datasource/PersonDatasource.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/model/ShoppingList.java
-/home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/dao/impl/UserDataAccessImpl.java
+/home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/security/ApplicationUserMain.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/service/UserService.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/api/TemplateController.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/model/Product.java
