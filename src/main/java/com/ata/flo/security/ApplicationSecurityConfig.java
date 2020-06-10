@@ -9,7 +9,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.ata.flo.jwt.JwtTokenVerifier;
+import com.ata.flo.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 
 import static com.ata.flo.security.ApplicationUserRole.*;
 
@@ -33,6 +37,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.csrf().disable()
+			.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+			.addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager()))
+			.addFilterAfter(new JwtTokenVerifier(),JwtUsernameAndPasswordAuthenticationFilter.class)
 			.authorizeRequests()
 			.antMatchers("/", "index", "/css/*", "/js/*").permitAll() //hna fin tzid les page li bghiti ykono accessible bla authentication
 			.antMatchers("/api/**").hasRole(USER.name())
@@ -41,14 +50,12 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers(HttpMethod.PUT, "/admin/api/**").hasAuthority(USER_WRITE.getPermission())
 			.antMatchers(HttpMethod.GET, "/admin/api/**").hasAnyRole(ADMIN.name(), HALFADMIN.name())
 			.anyRequest()
-			.authenticated()
-			.and()
-			.httpBasic();
+			.authenticated();
 	}
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-	auth.authenticationProvider(daoAuthenticationProvider());
+		auth.authenticationProvider(daoAuthenticationProvider());
 	}
 	
 	@Bean

@@ -5,6 +5,7 @@
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/model/User.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/security/ApplicationSecurityConfig.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/security/ApplicationUserPermission.java
+/home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/security/MyUserDetailsService.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/dao/impl/ShoppingListDaoImpl.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/dao/impl/UserDaoImpl.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/dao/ProductDao.java
