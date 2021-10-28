@@ -1,4 +1,9 @@
 -------------------------------------------------------------------------------
 Test set: com.ata.flo.FloApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.619 s - in com.ata.flo.FloApplicationTests
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 3.022 s <<< FAILURE! - in com.ata.flo.FloApplicationTests
+contextLoads  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jwtSecretKey' defined in file [/home/talbi/eclipse-workspace/flo/target/classes/com/ata/flo/jwt/JwtSecretKey.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.ata.flo.jwt.JwtConfig' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.ata.flo.jwt.JwtConfig' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+

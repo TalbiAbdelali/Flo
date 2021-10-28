@@ -1,5 +1,6 @@
 package com.ata.flo.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ata.flo.dao.ShoppingListDao;
 import com.ata.flo.model.Product;
 import com.ata.flo.model.ShoppingList;
+import com.ata.flo.model.User;
 
 @Service
 public class ShoppingListService {
@@ -21,8 +23,14 @@ public class ShoppingListService {
 		this.shoppingListDao = shoppingListDao;
 	}
 	
+	
+	
 	public int createShoppingList(ShoppingList list /*, List<Product> products*/) {
 		return shoppingListDao.createShoppingList(list);
+	}
+	
+	public List<ShoppingList> selectAllLists(){
+		return shoppingListDao.selectAllLists();
 	}
 	
 	public Optional<ShoppingList> getShoppingListById(String id) {

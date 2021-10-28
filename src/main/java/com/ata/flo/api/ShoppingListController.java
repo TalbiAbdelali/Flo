@@ -1,5 +1,7 @@
 package com.ata.flo.api;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ata.flo.model.Product;
 import com.ata.flo.model.ShoppingList;
+import com.ata.flo.model.User;
 import com.ata.flo.service.ShoppingListService;
 
 @RestController
@@ -30,6 +33,11 @@ public class ShoppingListController {
 	@PostMapping
 	public int createShoppingList(@Valid @NotNull @RequestBody ShoppingList list) {
 		return shoppingListService.createShoppingList(list);
+	}
+	
+	@GetMapping
+	public List<ShoppingList> selectAllLists(){
+		return shoppingListService.selectAllLists();
 	}
 	
 	@GetMapping(path = "{shoppingId}")

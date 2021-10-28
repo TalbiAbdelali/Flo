@@ -1,6 +1,7 @@
 package com.ata.flo.dao.impl;
 
 import java.sql.Types;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -9,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.ata.flo.api.mapper.ProductRowMapper;
 import com.ata.flo.dao.ShoppingListDao;
 import com.ata.flo.model.Product;
 import com.ata.flo.model.ShoppingList;
+import com.ata.flo.model.User;
 
 @Repository("ShoppingListPsqlTable")
 public class ShoppingListDaoImpl implements ShoppingListDao{
@@ -39,7 +42,7 @@ public class ShoppingListDaoImpl implements ShoppingListDao{
 
 	@Override
 	public int deleteProductBYId(String id) {
-		final String sql ="DELETE FROM products WHERE id = ?";
+		final String sql ="DELETE FROM products WHERE productid = ?";
 		
 		Object[] params = {id};
         int[] types = {Types.VARCHAR};
@@ -73,18 +76,20 @@ public class ShoppingListDaoImpl implements ShoppingListDao{
 	}
 
 	@Override
-	public int createShoppingList(ShoppingList list /*, List<Product> products*/ ) {
+	public int createShoppingList(ShoppingList list /*, List<Product> products*/  ) {
 		String sql = "insert into ShoppingLists(shoppingid, totalPrice) values(?,?)";
 		String shoppingId = UUID.randomUUID().toString();
-		double totalPrice = 0;
+		double totalPrice = 0.0;
 		this.jdbcTemplate.update(sql,
 				new Object[]{
 						shoppingId,
 						totalPrice
 						});
-		for(Product p : list.getList()) {
-			insertProduct(shoppingId, p);
-			totalPrice =+ p.getPrice();
+		if(list.getList()!=null) {
+			for(Product p : list.getList()) {
+				insertProduct(shoppingId, p);
+				totalPrice += p.getPrice();
+			}
 		}
 		
 		sql ="UPDATE ShoppingLists SET totalPrice = ?  WHERE shoppingid = ?";
@@ -95,10 +100,15 @@ public class ShoppingListDaoImpl implements ShoppingListDao{
 		return 1;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ShoppingList> selectAllLists() {
-		// TODO Auto-generated method stub
-		return null;
+		final String sql ="SELECT * FROM  shoppinglists";
+ 		return jdbcTemplate.query(sql, (resultSet, i) -> {
+ 			String shoppingid = resultSet.getString("shoppingid"); 			
+ 			 			
+ 			return selectListById(shoppingid).orElse(null);
+ 		});
 	}
 
 	@Override

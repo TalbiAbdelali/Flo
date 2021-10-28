@@ -29,9 +29,14 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public int insertUser(String id, User user) {
+		
 		final String sql = "insert into users(id, username, lastname, password, email, isenabled, roles, permissions) values(?,?,?,?,?,?,?,?)";
 		
-		Object[] params = {UUID.randomUUID().toString(), user.getUsername(), user.getLastname(), passwordEncoder.encode(user.getPassword()), user.getEmail(), user.getActive() == 1, String.join( ",", user.getRoles()), String.join( ",", user.getPermissions())};
+		
+		String defaultPermissions = "user:read,article:read";
+		String defaultRoles = "USER";
+		//Object[] params = {UUID.randomUUID().toString(), user.getUsername(), user.getLastname(), passwordEncoder.encode(user.getPassword()), user.getEmail(), user.getActive() == 1, String.join( ",", user.getRoles()), String.join( ",", user.getPermissions())};
+		Object[] params = {UUID.randomUUID().toString(), user.getUsername(), user.getLastname(), passwordEncoder.encode(user.getPassword()), "t", user.getActive() == 1, String.join( ",", defaultRoles), String.join( ",", defaultPermissions)};
         int[] types = {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.BOOLEAN, Types.VARCHAR, Types.VARCHAR};
 		
         return this.jdbcTemplate.update(sql, params, types);

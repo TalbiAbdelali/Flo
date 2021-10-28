@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,11 +23,11 @@ import io.jsonwebtoken.security.Keys;
 
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 	
-	private AuthenticationManager authenticationManager;
-	
+	private final AuthenticationManager authenticationManager;
 	
 	
 	public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
+		super();
 		this.authenticationManager = authenticationManager;
 	}
 

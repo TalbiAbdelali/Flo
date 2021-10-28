@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -21,16 +22,18 @@ import static com.ata.flo.security.ApplicationUserPermission.*;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	private final PasswordEncoder passwordEncoder;
-	
 	private final MyUserDetailsService myUserDetailsService;
 	
 	@Autowired
-	public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, MyUserDetailsService myUserDetailsService) {
+	public ApplicationSecurityConfig(PasswordEncoder passwordEncoder,
+			MyUserDetailsService myUserDetailsService) {
 		this.myUserDetailsService = myUserDetailsService;
 		this.passwordEncoder = passwordEncoder;
+		
 	}
 
 	@Override
@@ -43,8 +46,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 			.addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager()))
 			.addFilterAfter(new JwtTokenVerifier(),JwtUsernameAndPasswordAuthenticationFilter.class)
 			.authorizeRequests()
-			.antMatchers("/", "index", "/css/*", "/js/*").permitAll() //hna fin tzid les page li bghiti ykono accessible bla authentication
-			.antMatchers("/api/**").hasRole(USER.name())
+			.antMatchers("/", "/api/signup", "index", "/css/*", "/js/*").permitAll() //hna fin tzid les page li bghiti ykono accessible bla authentication
+			.antMatchers("/api/**").hasAnyRole(USER.name(),ADMIN.name())
 			.antMatchers(HttpMethod.DELETE, "/admin/api/**").hasAuthority(USER_WRITE.getPermission())
 			.antMatchers(HttpMethod.POST, "/admin/api/**").hasAuthority(USER_WRITE.getPermission())
 			.antMatchers(HttpMethod.PUT, "/admin/api/**").hasAuthority(USER_WRITE.getPermission())
