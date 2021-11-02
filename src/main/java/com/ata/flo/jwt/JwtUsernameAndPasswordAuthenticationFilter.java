@@ -3,6 +3,8 @@ package com.ata.flo.jwt;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
@@ -60,10 +62,15 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 				.setSubject(authResult.getName())
 				.claim("authorities", authResult.getAuthorities())
 				.setIssuedAt(new Date(0))
-				.setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2)))
+				//.setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2)))
+				.setExpiration(new Date(System.currentTimeMillis() + 10*60*1000)) // 1 minute expiration
 				.signWith(Keys.hmacShaKeyFor(key.getBytes()))
 				.compact();
 		
 		response.addHeader("Authorization", "Bearer " + token);
+		response.setContentType("application/json");
+		Map<String, String> tokens = new HashMap<String, String>();
+		tokens.put("token",token);
+		new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 	}
 }
