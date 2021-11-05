@@ -28,18 +28,21 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public int insertUser(String id, User user) {
+	public int insertUser(String id, User user) throws Exception{
 		
-		final String sql = "insert into users(id, username, lastname, password, email, isenabled, roles, permissions) values(?,?,?,?,?,?,?,?)";
-		
-		
-		String defaultPermissions = "user:read,article:read";
-		String defaultRoles = "USER";
-		//Object[] params = {UUID.randomUUID().toString(), user.getUsername(), user.getLastname(), passwordEncoder.encode(user.getPassword()), user.getEmail(), user.getActive() == 1, String.join( ",", user.getRoles()), String.join( ",", user.getPermissions())};
-		Object[] params = {UUID.randomUUID().toString(), user.getUsername(), user.getLastname(), passwordEncoder.encode(user.getPassword()), "t", user.getActive() == 1, String.join( ",", defaultRoles), String.join( ",", defaultPermissions)};
-        int[] types = {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.BOOLEAN, Types.VARCHAR, Types.VARCHAR};
-		
-        return this.jdbcTemplate.update(sql, params, types);
+		try {
+			final String sql = "insert into users(id, username, lastname, password, email, isenabled, roles, permissions) values(?,?,?,?,?,?,?,?)";
+			
+			String defaultPermissions = "user:read,article:read";
+			String defaultRoles = "USER";
+			//Object[] params = {UUID.randomUUID().toString(), user.getUsername(), user.getLastname(), passwordEncoder.encode(user.getPassword()), user.getEmail(), user.getActive() == 1, String.join( ",", user.getRoles()), String.join( ",", user.getPermissions())};
+			Object[] params = {UUID.randomUUID().toString(), user.getUsername(), user.getLastname(), passwordEncoder.encode(user.getPassword()), user.getEmail(), "t", String.join( ",", defaultRoles), String.join( ",", defaultPermissions)};
+	        int[] types = {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.BOOLEAN, Types.VARCHAR, Types.VARCHAR};
+			
+	        return this.jdbcTemplate.update(sql, params, types);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	@Override
@@ -127,6 +130,15 @@ public class UserDaoImpl implements UserDao{
  			return new User(userId, username, lastname, password, email, active, roles, permissions);
  		});
  		return Optional.ofNullable(user);
+	}
+
+	@Override
+	public boolean isEmailExiste(String email) {
+		String sql = "SELECT count(*) FROM users WHERE email = ?";
+
+	    int count = jdbcTemplate.queryForObject(sql, new Object[] { email }, Integer.class);
+
+	    return count > 0;
 	}
 
 }

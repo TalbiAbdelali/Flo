@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import com.ata.flo.service.UserService;
 
 @RestController
 @RequestMapping("admin/api/user")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserManagementController {
 	
 	private final UserService userService;
@@ -29,8 +31,12 @@ public class UserManagementController {
 	}
 	
 	@PostMapping
-	public void  addUser(@Valid @NotNull @RequestBody User user) {
-		this.userService.addUser(user);
+	public void  addUser(@Valid @NotNull @RequestBody User user) throws Exception{
+		try {
+			this.userService.addUser(user);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	@GetMapping

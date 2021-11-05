@@ -20,8 +20,16 @@ public class UserService {
 		this.userDao = userDao;
 	}
 	
-	public int addUser(User user) {
-		return this.userDao.insertUser(user);
+	public int addUser(User user) throws Exception{
+		try {
+			return this.userDao.insertUser(user);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	public boolean isEmailExiste(String email) {
+		return this.userDao.isEmailExiste(email);
 	}
 	
 	public List<User> getAllUsers(){

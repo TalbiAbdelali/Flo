@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.ata.flo.jwt.JwtTokenVerifier;
 import com.ata.flo.jwt.JwtUsernameAndPasswordAuthenticationFilter;
@@ -38,7 +41,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
+		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+			.and()
 			.csrf().disable()
 			.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -46,7 +50,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 			.addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager()))
 			.addFilterAfter(new JwtTokenVerifier(),JwtUsernameAndPasswordAuthenticationFilter.class)
 			.authorizeRequests()
-			.antMatchers("/", "/api/signup", "index", "/css/*", "/js/*").permitAll() //hna fin tzid les page li bghiti ykono accessible bla authentication
+			.antMatchers("/", "/login",  "/api/shoplist", "/api/signup", "/api/exist", "index", "/css/*", "/js/*").permitAll() //hna fin tzid les page li bghiti ykono accessible bla authentication
 			.antMatchers("/api/**").hasAnyRole(USER.name(),ADMIN.name())
 			.antMatchers(HttpMethod.DELETE, "/admin/api/**").hasAuthority(USER_WRITE.getPermission())
 			.antMatchers(HttpMethod.POST, "/admin/api/**").hasAuthority(USER_WRITE.getPermission())
@@ -54,6 +58,18 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers(HttpMethod.GET, "/admin/api/**").hasAnyRole(ADMIN.name(), HALFADMIN.name())
 			.anyRequest()
 			.authenticated();
+	}
+	
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**")
+				.allowedOrigins("*")
+				.allowedMethods("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS");
+			}
+		};
 	}
 	
 	@Override

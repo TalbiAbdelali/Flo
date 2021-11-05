@@ -1,6 +1,8 @@
 package com.ata.flo.model;
 
 import java.util.List;
+
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,13 +11,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class User {
 	
 	private final String id;
-	@NotBlank
+	@NotBlank(message="Enter your username")
 	private final String username;
-	@NotBlank
+	@NotBlank(message="Entre your lastname")
 	private final String lastname;
-	@NotBlank
+	@NotBlank(message="Enter your password")
 	private final String password;
-	@NotBlank
+	@Email(message="Enter a valid email")
 	private final String email;
 	private final User father;
 	private final User mother;
