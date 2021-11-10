@@ -53,6 +53,8 @@ public class UserDaoImpl implements UserDao{
  			String username = resultSet.getString("username");
  			String password = resultSet.getString("password");
  			String lastname = resultSet.getString("lastname");
+ 			String father = resultSet.getString("father");
+ 			String mother = resultSet.getString("mother");
  			String email = resultSet.getString("email");
  			boolean isEnabled = resultSet.getBoolean("isenabled");
  			int active = isEnabled ? 1 : 0;
@@ -63,7 +65,7 @@ public class UserDaoImpl implements UserDao{
  				roles = Arrays.asList(resultSet.getString("roles").split(","));
  				permissions = Arrays.asList(resultSet.getString("permissions").split(","));
  			}
- 			return new User(userId, username, lastname, password, email, active, roles, permissions);
+ 			return new User(userId, username, lastname, password, email, father, mother, active, roles, permissions);
  		});
 	}
 
@@ -75,6 +77,8 @@ public class UserDaoImpl implements UserDao{
  			String username = resultSet.getString("username");
  			String password = resultSet.getString("password");
  			String lastname = resultSet.getString("lastname");
+ 			String father = resultSet.getString("father");
+ 			String mother = resultSet.getString("mother");
  			String email = resultSet.getString("email");
  			boolean isEnabled = resultSet.getBoolean("isenabled");
  			int active = isEnabled ? 1 : 0;
@@ -85,7 +89,7 @@ public class UserDaoImpl implements UserDao{
  				roles = Arrays.asList(resultSet.getString("roles").split(","));
  				permissions = Arrays.asList(resultSet.getString("permissions").split(","));
  			}
- 			return new User(userId, username, lastname, password, email, active, roles, permissions);
+ 			return new User(userId, username, lastname, password, email, father, mother, active, roles, permissions);
  		});
  		return Optional.ofNullable(user);
 	}
@@ -117,6 +121,8 @@ public class UserDaoImpl implements UserDao{
  			String userId = resultSet.getString("id");
  			String password = resultSet.getString("password");
  			String lastname = resultSet.getString("lastname");
+ 			String father = resultSet.getString("father");
+ 			String mother = resultSet.getString("mother");
  			String email = resultSet.getString("email");
  			boolean isEnabled = resultSet.getBoolean("isenabled");
  			int active = isEnabled ? 1 : 0;
@@ -127,7 +133,7 @@ public class UserDaoImpl implements UserDao{
  				roles = Arrays.asList(resultSet.getString("roles").split(","));
  				permissions = Arrays.asList(resultSet.getString("permissions").split(","));
  			}
- 			return new User(userId, username, lastname, password, email, active, roles, permissions);
+ 			return new User(userId, username, lastname, password, email, father, mother, active, roles, permissions);
  		});
  		return Optional.ofNullable(user);
 	}

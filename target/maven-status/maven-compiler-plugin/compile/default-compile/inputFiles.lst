@@ -3,6 +3,7 @@
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/security/ApplicationSecurityConfig.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/security/ApplicationUserPermission.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/security/MyUserDetailsService.java
+/home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/api/UserController.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/dao/UserDao.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/datasource/PersonDatasource.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/model/ShoppingList.java
@@ -22,7 +23,6 @@
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/model/PersonnelProgram.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/security/PasswordConfig.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/service/UserService.java
-/home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/api/TemplateController.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/model/Product.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/security/ApplicationUserRole.java
 /home/talbi/eclipse-workspace/flo/src/main/java/com/ata/flo/jwt/UsernameAndPasswordAuthenticationRequest.java

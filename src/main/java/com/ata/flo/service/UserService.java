@@ -40,6 +40,10 @@ public class UserService {
 		return userDao.selectUserById(id);
 	}
 	
+	public Optional<User> getUserByUsername(String username){
+		return userDao.selectUserByUsername(username);
+	}
+	
 	public int deleteUser(String id) {
 		return userDao.deleteUserBYId(id);
 	}

@@ -19,8 +19,8 @@ public class User {
 	private final String password;
 	@Email(message="Enter a valid email")
 	private final String email;
-	private final User father;
-	private final User mother;
+	private final String father;
+	private final String mother;
 	private final String location;
 	
 	private int active;
@@ -40,6 +40,8 @@ public class User {
 			@JsonProperty("lastname") String lastname,
 			@JsonProperty("password") String password,
 			@JsonProperty("email") String email,
+			@JsonProperty("father") String father,
+			@JsonProperty("mother") String mother,
 			@JsonProperty("active") int active,
 			@JsonProperty("roles") List<String> roles,
 			@JsonProperty("permissions") List<String> permissions) {
@@ -48,21 +50,32 @@ public class User {
 		this.lastname = lastname;
 		this.password = password;
 		this.email = email;
-		this.father = null;
-		this.mother = null;
+		this.father = father;
+		this.mother = mother;
 		this.location = "";
 		this.active = active;
 		this.roles = roles;
 		this.permissions = permissions;
 	}
 	
-	public User(String id, String username, String lastname, String password, String email, User father, User mother,
-			String location, boolean isAccountExpired, boolean isAccountLocked, boolean isCredentielExpired,
-			boolean isEnabled, boolean isAdmin) {
+	public User(String id, String username, String password, String lastname, String email, String father, String mother,
+			String location) {
 		this.id = id;
 		this.username = username;
 		this.lastname = lastname;
 		this.password = password;
+		this.email = email;
+		this.father = father;
+		this.mother = mother;
+		this.location = location;
+	}
+	
+	public User(String id, String username, String lastname, String email, String father, String mother,
+			String location) {
+		this.id = id;
+		this.username = username;
+		this.lastname = lastname;
+		this.password = "";
 		this.email = email;
 		this.father = father;
 		this.mother = mother;
@@ -84,10 +97,10 @@ public class User {
 	public String getEmail() {
 		return email;
 	}
-	public User getFather() {
+	public String getFather() {
 		return father;
 	}
-	public User getMother() {
+	public String getMother() {
 		return mother;
 	}
 	public String getLocation() {
