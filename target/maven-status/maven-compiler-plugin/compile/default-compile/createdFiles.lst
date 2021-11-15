@@ -20,7 +20,6 @@ com/ata/flo/api/SignupController.class
 com/ata/flo/model/Activity.class
 com/ata/flo/security/PasswordConfig.class
 com/ata/flo/model/FamilyEvent.class
-com/ata/flo/security/ApplicationSecurityConfig$1.class
 com/ata/flo/FloApplication.class
 com/ata/flo/model/ShoppingList.class
 com/ata/flo/dao/ShoppingListDao.class

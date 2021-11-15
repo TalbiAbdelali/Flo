@@ -63,7 +63,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 				.claim("authorities", authResult.getAuthorities())
 				.setIssuedAt(new Date(0))
 				//.setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2)))
-				.setExpiration(new Date(System.currentTimeMillis() + 10*60*1000)) // 1 minute expiration
+				.setExpiration(new Date(System.currentTimeMillis() + 100*60*1000)) // 10 minute expiration (à changer à 1 min)
 				.signWith(Keys.hmacShaKeyFor(key.getBytes()))
 				.compact();
 		

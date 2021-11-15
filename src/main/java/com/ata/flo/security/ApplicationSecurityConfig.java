@@ -8,6 +8,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -38,10 +39,23 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 		this.passwordEncoder = passwordEncoder;
 		
 	}
+	
+	@Override
+	public void configure(WebSecurity web) {
+      web.ignoring()
+         .antMatchers(
+            "/*.html",
+            "/favicon.ico",
+            "/**/*.html",
+            "/**/*.css",
+            "/**/*.js",
+            "/h2-console/**"
+         );
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+		http.cors()/*.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())*/
 			.and()
 			.csrf().disable()
 			.sessionManagement()
@@ -60,17 +74,20 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 			.authenticated();
 	}
 	
-	@Bean
+	/*@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
 				.allowedOrigins("*")
-				.allowedMethods("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS");
+				.allowedMethods("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS")
+				.maxAge(3600L)
+                .allowedHeaders("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization")
+                .allowCredentials(true);
 			}
 		};
-	}
+	}*/
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

@@ -106,10 +106,10 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public int updateUserById(String id, User userUpdate) {
-		final String sql ="UPDATE users SET username = ?, lastname = ?, password = ?, email = ?  WHERE id = ?";
+		final String sql ="UPDATE users SET username = ?, lastname = ?, password = ?, email = ?, father = ?, mother = ?  WHERE id = ?";
 		
-		Object[] params = {userUpdate.getUsername(), userUpdate.getLastname(), userUpdate.getPassword(), userUpdate.getEmail(), id};
-        int[] types = {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
+		Object[] params = {userUpdate.getUsername(), userUpdate.getLastname(), userUpdate.getPassword(), userUpdate.getEmail(), userUpdate.getFather(), userUpdate.getMother(), id};
+        int[] types = {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
         
 		return this.jdbcTemplate.update(sql, params, types);				
 	}
