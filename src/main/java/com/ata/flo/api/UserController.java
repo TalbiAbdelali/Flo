@@ -2,6 +2,7 @@ package com.ata.flo.api;
 
 import java.security.Principal;
 import java.util.Base64;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,7 +24,7 @@ import com.ata.flo.model.User;
 import com.ata.flo.service.UserService;
 
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("api/users")
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 	
@@ -33,13 +34,23 @@ public class UserController {
 		this.userService = userSevice;
 	}
 	
-    @GetMapping
-    public User getUser(@RequestParam(required = true) String username) {
+	@GetMapping
+	public List<User> getAllUsers(){
+		return userService.getAllUsers();
+	}
+	
+    @GetMapping(path="user")
+    public User getUser(@RequestParam(value="username") String username) {
         return this.userService.getUserByUsername(username).orElse(null);
+    }
+    
+    @GetMapping(path="user/{id}")
+    public User getUserById(@PathVariable("id") String id) {
+        return this.userService.getUserById(id).orElse(null);
     }
     
     @PutMapping(path = "{id}")
 	public void updatePersonById(@PathVariable("id") String id,/*@Valid @NotNull*/ @RequestBody User user) {
 		this.userService.updateUser(id, user);
-	}   
+	}
 }
