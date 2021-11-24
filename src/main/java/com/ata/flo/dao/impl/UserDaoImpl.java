@@ -2,6 +2,7 @@ package com.ata.flo.dao.impl;
 
 import java.sql.Types;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,13 +32,51 @@ public class UserDaoImpl implements UserDao{
 	public int insertUser(String id, User user) throws Exception{
 		
 		try {
-			final String sql = "insert into users(id, username, lastname, password, email, isenabled, roles, permissions) values(?,?,?,?,?,?,?,?)";
+			final String sql = "insert into "
+					+ "users(id, username, lastname, password, email, location, address, phone, birthday, sex, url_photo, isenabled, roles, permissions) "
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			
 			String defaultPermissions = "user:read,article:read";
 			String defaultRoles = "USER";
-			//Object[] params = {UUID.randomUUID().toString(), user.getUsername(), user.getLastname(), passwordEncoder.encode(user.getPassword()), user.getEmail(), user.getActive() == 1, String.join( ",", user.getRoles()), String.join( ",", user.getPermissions())};
-			Object[] params = {UUID.randomUUID().toString(), user.getUsername(), user.getLastname(), passwordEncoder.encode(user.getPassword()), user.getEmail(), "t", String.join( ",", defaultRoles), String.join( ",", defaultPermissions)};
-	        int[] types = {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.BOOLEAN, Types.VARCHAR, Types.VARCHAR};
+			String isEnabled = "t";
+			String defaultUrlPhoto = "";
+			if(user.getUrlPhoto() == null) {
+				if(user.getSex() == "male") {
+					defaultUrlPhoto = "https://bootdey.com/img/Content/avatar/avatar7.png";
+				} else {
+					defaultUrlPhoto = "https://bootdey.com/img/Content/avatar/avatar8.png";
+				}
+			}
+			Object[] params = {
+					UUID.randomUUID().toString(), 
+					user.getUsername(), 
+					user.getLastname(), 
+					passwordEncoder.encode(user.getPassword()), 
+					user.getEmail(), 
+					user.getLocation(), 
+					user.getAddress(), 
+					user.getPhone(), 
+					user.getBirthday(), 
+					user.getSex(), 
+					defaultUrlPhoto, 
+					isEnabled, 
+					String.join( ",", defaultRoles), 
+					String.join( ",", defaultPermissions)
+					};
+	        int[] types = {
+	        		Types.VARCHAR, 
+	        		Types.VARCHAR, 
+	        		Types.VARCHAR, 
+	        		Types.VARCHAR, 
+	        		Types.VARCHAR, 
+	        		Types.BOOLEAN, 
+	        		Types.VARCHAR, 
+	        		Types.VARCHAR,
+	        		Types.VARCHAR, 
+	        		Types.INTEGER,
+	        		Types.DATE, 
+	        		Types.VARCHAR
+	        		};
 			
 	        return this.jdbcTemplate.update(sql, params, types);
 		} catch (Exception e) {
@@ -56,6 +95,12 @@ public class UserDaoImpl implements UserDao{
  			String father = resultSet.getString("father");
  			String mother = resultSet.getString("mother");
  			String email = resultSet.getString("email");
+ 			String location = resultSet.getString("location");
+ 			String address = resultSet.getString("address");
+ 			long phone = resultSet.getLong("phone");
+ 			Date birthday = resultSet.getDate("birthday");
+ 			String sex = resultSet.getString("sex");
+ 			String urlPhoto = resultSet.getString("url_photo");
  			boolean isEnabled = resultSet.getBoolean("isenabled");
  			int active = isEnabled ? 1 : 0;
  			List<String> roles = null;
@@ -65,7 +110,7 @@ public class UserDaoImpl implements UserDao{
  				roles = Arrays.asList(resultSet.getString("roles").split(","));
  				permissions = Arrays.asList(resultSet.getString("permissions").split(","));
  			}
- 			return new User(userId, username, lastname, password, email, father, mother, active, roles, permissions);
+ 			return new User(userId, username, lastname, password, email, father, mother, location, birthday, sex, address, phone, urlPhoto, active, roles, permissions);
  		});
 	}
 
@@ -80,6 +125,12 @@ public class UserDaoImpl implements UserDao{
  			String father = resultSet.getString("father");
  			String mother = resultSet.getString("mother");
  			String email = resultSet.getString("email");
+ 			String location = resultSet.getString("location");
+ 			String address = resultSet.getString("address");
+ 			long phone = resultSet.getLong("phone");
+ 			Date birthday = resultSet.getDate("birthday");
+ 			String sex = resultSet.getString("sex");
+ 			String urlPhoto = resultSet.getString("url_photo");
  			boolean isEnabled = resultSet.getBoolean("isenabled");
  			int active = isEnabled ? 1 : 0;
  			List<String> roles = null;
@@ -89,7 +140,24 @@ public class UserDaoImpl implements UserDao{
  				roles = Arrays.asList(resultSet.getString("roles").split(","));
  				permissions = Arrays.asList(resultSet.getString("permissions").split(","));
  			}
- 			return new User(userId, username, lastname, password, email, father, mother, active, roles, permissions);
+ 			return new User(
+ 					userId, 
+ 					username, 
+ 					lastname, 
+ 					password, 
+ 					email, 
+ 					father, 
+ 					mother, 
+ 					location, 
+ 					birthday, 
+ 					sex, 
+ 					address, 
+ 					phone, 
+ 					urlPhoto, 
+ 					active, 
+ 					roles, 
+ 					permissions
+ 					);
  		});
  		return Optional.ofNullable(user);
 	}
@@ -106,10 +174,39 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public int updateUserById(String id, User userUpdate) {
-		final String sql ="UPDATE users SET username = ?, lastname = ?, password = ?, email = ?, father = ?, mother = ?  WHERE id = ?";
+		final String sql ="UPDATE users "
+				+ "SET username = ?, lastname = ?, password = ?, email = ?, father = ?, mother = ? , location = ?, birthday = ?, phone = ?, sex = ?, address = ?, url_photo = ? "
+				+ "WHERE id = ?";
 		
-		Object[] params = {userUpdate.getUsername(), userUpdate.getLastname(), userUpdate.getPassword(), userUpdate.getEmail(), userUpdate.getFather(), userUpdate.getMother(), id};
-        int[] types = {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
+		Object[] params = {
+				userUpdate.getUsername(), 
+				userUpdate.getLastname(), 
+				userUpdate.getPassword(), 
+				userUpdate.getEmail(), 
+				userUpdate.getFather(), 
+				userUpdate.getMother(), 
+				userUpdate.getLocation(), 
+				userUpdate.getBirthday(), 
+				userUpdate.getPhone(), 
+				userUpdate.getSex(), 
+				userUpdate.getAddress(), 
+				userUpdate.getUrlPhoto(), 
+				id};
+        int[] types = {
+        		Types.VARCHAR, 
+        		Types.VARCHAR, 
+        		Types.VARCHAR, 
+        		Types.VARCHAR, 
+        		Types.VARCHAR, 
+        		Types.VARCHAR,
+        		Types.VARCHAR,
+        		Types.DATE, 
+        		Types.BIGINT, 
+        		Types.VARCHAR, 
+        		Types.VARCHAR, 
+        		Types.VARCHAR,
+        		Types.VARCHAR
+        		};
         
 		return this.jdbcTemplate.update(sql, params, types);				
 	}
@@ -124,6 +221,12 @@ public class UserDaoImpl implements UserDao{
  			String father = resultSet.getString("father");
  			String mother = resultSet.getString("mother");
  			String email = resultSet.getString("email");
+ 			String location = resultSet.getString("location");
+ 			String address = resultSet.getString("address");
+ 			long phone = resultSet.getLong("phone");
+ 			Date birthday = resultSet.getDate("birthday");
+ 			String sex = resultSet.getString("sex");
+ 			String urlPhoto = resultSet.getString("url_photo");
  			boolean isEnabled = resultSet.getBoolean("isenabled");
  			int active = isEnabled ? 1 : 0;
  			List<String> roles = null;
@@ -133,7 +236,24 @@ public class UserDaoImpl implements UserDao{
  				roles = Arrays.asList(resultSet.getString("roles").split(","));
  				permissions = Arrays.asList(resultSet.getString("permissions").split(","));
  			}
- 			return new User(userId, username, lastname, password, email, father, mother, active, roles, permissions);
+ 			return new User(
+ 					userId, 
+ 					username, 
+ 					lastname, 
+ 					password, 
+ 					email, 
+ 					father, 
+ 					mother, 
+ 					location, 
+ 					birthday, 
+ 					sex, 
+ 					address, 
+ 					phone, 
+ 					urlPhoto, 
+ 					active, 
+ 					roles, 
+ 					permissions
+ 					);
  		});
  		return Optional.ofNullable(user);
 	}

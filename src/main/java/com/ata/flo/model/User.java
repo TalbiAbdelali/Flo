@@ -1,5 +1,6 @@
 package com.ata.flo.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.Email;
@@ -22,6 +23,12 @@ public class User {
 	private final String father;
 	private final String mother;
 	private final String location;
+	private final Date birthday;
+	private final String sex;
+	private String address;
+	private long phone;
+	private String urlPhoto;
+	
 	
 	private int active;
 	
@@ -42,6 +49,12 @@ public class User {
 			@JsonProperty("email") String email,
 			@JsonProperty("father") String father,
 			@JsonProperty("mother") String mother,
+			@JsonProperty("location") String location,
+			@JsonProperty("birthday") Date birthday,
+			@JsonProperty("sex") String sex,
+			@JsonProperty("address") String address,
+			@JsonProperty("phone") long phone,
+			@JsonProperty("urlPhoto") String urlPhoto,
 			@JsonProperty("active") int active,
 			@JsonProperty("roles") List<String> roles,
 			@JsonProperty("permissions") List<String> permissions) {
@@ -52,14 +65,22 @@ public class User {
 		this.email = email;
 		this.father = father;
 		this.mother = mother;
-		this.location = "";
+		this.location = location;
+		this.birthday = birthday;
+		this.sex = sex;
+		this.address = address;
+		this.phone = phone;
+		this.urlPhoto = urlPhoto;
 		this.active = active;
 		this.roles = roles;
 		this.permissions = permissions;
 	}
 	
+
 	public User(String id, String username, String password, String lastname, String email, String father, String mother,
 			String location) {
+		this.birthday = new Date();
+		this.sex = "";
 		this.id = id;
 		this.username = username;
 		this.lastname = lastname;
@@ -72,6 +93,8 @@ public class User {
 	
 	public User(String id, String username, String lastname, String email, String father, String mother,
 			String location) {
+		this.birthday = new Date();
+		this.sex = "";
 		this.id = id;
 		this.username = username;
 		this.lastname = lastname;
@@ -105,6 +128,38 @@ public class User {
 	}
 	public String getLocation() {
 		return location;
+	}
+	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public long getPhone() {
+		return phone;
+	}
+
+	public void setPhone(long phone) {
+		this.phone = phone;
+	}
+
+	public String getUrlPhoto() {
+		return urlPhoto;
+	}
+
+	public void setUrlPhoto(String urlPhoto) {
+		this.urlPhoto = urlPhoto;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public String getSex() {
+		return sex;
 	}
 
 	public int getActive() {
