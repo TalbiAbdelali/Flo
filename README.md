@@ -1,2 +1,2 @@
 # Flo
-FLO (Family life organizer) - BackEnd
+FLO (Family life organizer) - Backend
