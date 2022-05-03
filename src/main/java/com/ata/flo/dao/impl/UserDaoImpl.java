@@ -38,7 +38,7 @@ public class UserDaoImpl implements UserDao{
 			
 			String defaultPermissions = "user:read,article:read";
 			String defaultRoles = "USER";
-			String isEnabled = "t";
+			boolean isEnabled = true;
 			String defaultUrlPhoto = "";
 			if(user.getUrlPhoto() == null) {
 				if(user.getSex() == "male") {
@@ -69,12 +69,14 @@ public class UserDaoImpl implements UserDao{
 	        		Types.VARCHAR, 
 	        		Types.VARCHAR, 
 	        		Types.VARCHAR, 
-	        		Types.BOOLEAN, 
 	        		Types.VARCHAR, 
+	        		Types.VARCHAR, 
+	        		Types.BIGINT,
+	        		Types.DATE, 
 	        		Types.VARCHAR,
 	        		Types.VARCHAR, 
-	        		Types.INTEGER,
-	        		Types.DATE, 
+	        		Types.BOOLEAN,
+	        		Types.VARCHAR,
 	        		Types.VARCHAR
 	        		};
 			
@@ -263,6 +265,15 @@ public class UserDaoImpl implements UserDao{
 		String sql = "SELECT count(*) FROM users WHERE email = ?";
 
 	    int count = jdbcTemplate.queryForObject(sql, new Object[] { email }, Integer.class);
+
+	    return count > 0;
+	}
+	
+	@Override
+	public boolean isUsernameExist(String username) {
+		String sql = "SELECT count(*) FROM users WHERE username = ?";
+
+	    int count = jdbcTemplate.queryForObject(sql, new Object[] { username }, Integer.class);
 
 	    return count > 0;
 	}

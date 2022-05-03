@@ -52,4 +52,8 @@ public class UserService {
 		return userDao.updateUserById(id, user);
 	}
 	
+	public boolean isUsernameExist(String username) {
+		return userDao.isUsernameExist(username);
+	}
+	
 }

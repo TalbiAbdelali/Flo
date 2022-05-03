@@ -44,4 +44,9 @@ public class UserController {
 	public void updatePersonById(@PathVariable("id") String id,/*@Valid @NotNull*/ @RequestBody User user) {
 		this.userService.updateUser(id, user);
 	}
+    
+    @GetMapping(path = "usernameExist")
+    public Boolean isUsernameExist(@RequestParam String username) {
+    	return this.userService.isUsernameExist(username);
+    }
 }

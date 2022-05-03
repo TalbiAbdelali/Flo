@@ -1,5 +1,7 @@
 package com.ata.flo.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.ata.flo.jwt.JwtTokenVerifier;
 import com.ata.flo.jwt.JwtUsernameAndPasswordAuthenticationFilter;
@@ -28,6 +27,9 @@ import static com.ata.flo.security.ApplicationUserPermission.*;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
+	
+	//How to logging application
+	private static final Logger logger = LoggerFactory.getLogger("ApplicationSecurityConfig.class");
 	
 	private final PasswordEncoder passwordEncoder;
 	private final MyUserDetailsService myUserDetailsService;
@@ -49,6 +51,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
             "/**/*.html",
             "/**/*.css",
             "/**/*.js",
+            "/**/*.png",
+            "/**/*.jpg",
+            "/**/*.jpeg",
             "/h2-console/**"
          );
 	}
@@ -72,26 +77,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers(HttpMethod.GET, "/admin/api/**").hasAnyRole(ADMIN.name(), HALFADMIN.name())
 			.anyRequest()
 			.authenticated();
+		logger.info("INFO", "Success");
 	}
-	
-	/*@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-				.allowedOrigins("*")
-				.allowedMethods("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS")
-				.maxAge(3600L)
-                .allowedHeaders("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization")
-                .allowCredentials(true);
-			}
-		};
-	}*/
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(daoAuthenticationProvider());
+		logger.info("INFO", "DAO Authentication Provider created.");
 	}
 	
 	@Bean

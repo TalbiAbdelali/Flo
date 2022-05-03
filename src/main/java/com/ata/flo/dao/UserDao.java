@@ -20,6 +20,8 @@ public interface UserDao {
 	
 	boolean isEmailExiste(String email);
 	
+	boolean isUsernameExist(String username);
+	
 	List<User> selectAllUsers();
 	
 	Optional<User> selectUserById(String id);
@@ -30,4 +32,5 @@ public interface UserDao {
 	int deleteUserBYId(String id);
 	
 	int updateUserById(String id, User user);
+	
 }
